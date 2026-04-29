@@ -28,6 +28,7 @@ jobs:
           GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           RECIPIENT_EMAIL: ${{ secrets.RECIPIENT_EMAIL }}
+          BCC_EMAILS: ${{ secrets.BCC_EMAILS }}
         run: python main.py
 
       - name: Upload newsletter artifact

@@ -117,6 +117,7 @@ def send_newsletter(html_content: str, subject: str):
     """Send the newsletter via Gmail SMTP."""
     sender_email = os.environ["GMAIL_ADDRESS"]
     recipient_email = os.environ.get("RECIPIENT_EMAIL", sender_email)
+    bcc_emails = [e.strip() for e in os.environ.get("BCC_EMAILS", "").split(",") if e.strip()]
     app_password = os.environ["GMAIL_APP_PASSWORD"]
 
     msg = MIMEMultipart("alternative")
@@ -127,11 +128,12 @@ def send_newsletter(html_content: str, subject: str):
     # Attach HTML version
     msg.attach(MIMEText(html_content, "html"))
 
+    all_recipients = [recipient_email] + bcc_emails
     with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
         server.login(sender_email, app_password)
-        server.send_message(msg)
+        server.send_message(msg, to_addrs=all_recipients)
 
-    print(f"✅ Newsletter sent to {recipient_email}")
+    print(f"✅ Newsletter sent to {recipient_email}" + (f" (+ {len(bcc_emails)} on BCC)" if bcc_emails else ""))
 
 
 def main():
