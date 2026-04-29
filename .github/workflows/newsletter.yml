@@ -1,0 +1,39 @@
+name: Weekly AI Newsletter
+
+on:
+  schedule:
+    # Every Monday at 8:00 AM CET (7:00 AM UTC)
+    - cron: "0 7 * * 1"
+  workflow_dispatch: # Allow manual trigger from GitHub UI
+
+jobs:
+  send-newsletter:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run newsletter agent
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          RECIPIENT_EMAIL: ${{ secrets.RECIPIENT_EMAIL }}
+        run: python main.py
+
+      - name: Upload newsletter artifact
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: newsletter-${{ github.run_number }}
+          path: latest_newsletter.html
+          retention-days: 30
