@@ -7,29 +7,67 @@ then sends a formatted newsletter to your Gmail.
 import anthropic
 import smtplib
 import os
-import json
 from datetime import datetime, timedelta
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from newsletter_template import render_newsletter
 
 
-def gather_ai_news() -> str:
-    """Use Claude with web search to find and summarize the latest AI news."""
+NEWSLETTER_TOOL = {
+    "name": "submit_newsletter",
+    "description": "Submit the final curated weekly AI newsletter. Call this exactly once after web searches are complete.",
+    "input_schema": {
+        "type": "object",
+        "properties": {
+            "sections": {
+                "type": "array",
+                "description": "Newsletter sections (typically 3-5). Only include sections that have news.",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "emoji": {"type": "string"},
+                        "title": {"type": "string"},
+                        "items": {
+                            "type": "array",
+                            "description": "2-4 news items.",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "title": {"type": "string"},
+                                    "summary": {"type": "string", "description": "2-3 sentence summary with specific details."},
+                                    "link": {"type": "string"},
+                                },
+                                "required": ["title", "summary", "link"],
+                            },
+                        },
+                    },
+                    "required": ["emoji", "title", "items"],
+                },
+            },
+            "one_liner": {"type": "string", "description": "A single witty one-liner summarizing this week in AI."},
+        },
+        "required": ["sections", "one_liner"],
+    },
+}
+
+
+def gather_ai_news() -> dict:
+    """Use Claude with web search to find AI news; return structured newsletter data."""
     client = anthropic.Anthropic()  # Uses ANTHROPIC_API_KEY env var
 
     today = datetime.now().strftime("%B %d, %Y")
     week_ago = (datetime.now() - timedelta(days=7)).strftime("%B %d, %Y")
 
     response = client.messages.create(
-        model="claude-sonnet-4-20250514",
-        max_tokens=4096,
+        model="claude-sonnet-4-6",
+        max_tokens=8192,
         tools=[
             {
                 "type": "web_search_20250305",
                 "name": "web_search",
                 "max_uses": 10,
-            }
+            },
+            NEWSLETTER_TOOL,
         ],
         system=f"""You are an AI news curator writing a weekly newsletter for an AI Engineer & Data Scientist.
 Today's date: {today}. Cover the period from {week_ago} to {today}.
@@ -38,7 +76,7 @@ Your job:
 1. Search for the most important AI developments from the past 7 days
 2. Focus on: new model releases, research breakthroughs, open-source tools,
    frameworks, practical engineering insights, and industry moves
-3. Write the newsletter content in the exact JSON format specified
+3. After your searches, call the submit_newsletter tool with the final newsletter content
 
 Search multiple queries to get broad coverage:
 - New AI model releases and benchmarks
@@ -46,71 +84,28 @@ Search multiple queries to get broad coverage:
 - AI tools, frameworks, and open-source releases
 - Major AI industry news and company announcements
 
-Be specific with version numbers, model names, and concrete details.
-Include links where available.""",
+Be specific with version numbers, model names, and concrete details. Include links where available.
+Suggested sections (only include those that have news):
+🚀 New Models & Releases · 🔬 Research & Breakthroughs · 🛠️ Tools & Frameworks · 💼 Industry & Business · 💡 Worth Reading""",
         messages=[
             {
                 "role": "user",
-                "content": f"""Find the most important AI news from {week_ago} to {today}.
-
-Respond ONLY with a JSON object (no markdown, no backticks) in this exact format:
-{{
-    "sections": [
-        {{
-            "emoji": "🚀",
-            "title": "New Models & Releases",
-            "items": [
-                {{
-                    "title": "Item title",
-                    "summary": "2-3 sentence summary with specific details.",
-                    "link": "https://..."
-                }}
-            ]
-        }},
-        {{
-            "emoji": "🔬",
-            "title": "Research & Breakthroughs",
-            "items": [...]
-        }},
-        {{
-            "emoji": "🛠️",
-            "title": "Tools & Frameworks",
-            "items": [...]
-        }},
-        {{
-            "emoji": "💼",
-            "title": "Industry & Business",
-            "items": [...]
-        }},
-        {{
-            "emoji": "💡",
-            "title": "Worth Reading",
-            "items": [...]
-        }}
-    ],
-    "one_liner": "A single witty one-liner summarizing this week in AI"
-}}
-
-Include 2-4 items per section. Only include sections that have news.""",
+                "content": (
+                    f"Find the most important AI news from {week_ago} to {today}, "
+                    "then call submit_newsletter with 2-4 items per section."
+                ),
             }
         ],
     )
 
-    # Extract the text content from the response
-    text_parts = []
     for block in response.content:
-        if block.type == "text":
-            text_parts.append(block.text)
+        if block.type == "tool_use" and block.name == "submit_newsletter":
+            return block.input
 
-    full_text = "\n".join(text_parts)
-
-    # Clean up and parse the JSON
-    full_text = full_text.strip()
-    if full_text.startswith("```"):
-        full_text = full_text.split("\n", 1)[1]  # Remove first line
-        full_text = full_text.rsplit("```", 1)[0]  # Remove last backticks
-
-    return full_text
+    raise RuntimeError(
+        f"Model did not call submit_newsletter. stop_reason={response.stop_reason}. "
+        "Check ANTHROPIC_API_KEY, max_tokens, or rerun."
+    )
 
 
 def send_newsletter(html_content: str, subject: str):
@@ -133,26 +128,12 @@ def send_newsletter(html_content: str, subject: str):
         server.login(sender_email, app_password)
         server.send_message(msg, to_addrs=all_recipients)
 
-    print(f"✅ Newsletter sent to {recipient_email}" + (f" (+ {len(bcc_emails)} on BCC)" if bcc_emails else ""))
+    print(f"✅ Newsletter sent to {recipient_email}" + (f"\n   BCC ({len(bcc_emails)}): {', '.join(bcc_emails)}" if bcc_emails else ""))
 
 
 def main():
     print("🔍 Gathering AI news with Claude + web search...")
-    raw_json = gather_ai_news()
-
-    try:
-        newsletter_data = json.loads(raw_json)
-    except json.JSONDecodeError as e:
-        print(f"⚠️ Failed to parse JSON, attempting to extract...")
-        # Try to find JSON in the text
-        import re
-        match = re.search(r'\{[\s\S]*\}', raw_json)
-        if match:
-            newsletter_data = json.loads(match.group())
-        else:
-            print(f"❌ Could not parse newsletter data: {e}")
-            print(f"Raw output:\n{raw_json[:500]}")
-            return
+    newsletter_data = gather_ai_news()
 
     today = datetime.now().strftime("%B %d, %Y")
     week_num = datetime.now().isocalendar()[1]

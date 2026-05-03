@@ -1,0 +1,132 @@
+I now have comprehensive data to assemble the newsletter. Let me compile it into the requested JSON format.
+
+{
+  "sections": [
+    {
+      "emoji": "🚀",
+      "title": "New Models & Releases",
+      "items": [
+        {
+          "title": "OpenAI Ships GPT-5.5 ("Spud") — Doubles Long-Context Performance",
+          "summary": "OpenAI released GPT-5.5 (codename Spud) on April 23, rolling it out to Plus, Pro, Business, and Enterprise users in ChatGPT and Codex. The headline numbers: Terminal-Bench 2.0 at 82.7%, and the MRCR v2 long-context score at 1M tokens jumped from 36.6% (GPT-5.4) to 74.0% — more than doubling. The API opened on April 24 at $5/$30 per million input/output tokens with a 1M-token context window, and OpenAI positions it as a step toward a unified ChatGPT–Codex–browser super-app for agentic enterprise workflows.",
+          "link": "https://www.cnbc.com/2026/04/23/openai-announces-latest-artificial-intelligence-model.html"
+        },
+        {
+          "title": "DeepSeek V4 Preview: The \"Second DeepSeek Moment\" — 1.6T Params, MIT License",
+          "summary": "Less than 24 hours after GPT-5.5 shipped, DeepSeek dropped V4 Preview on April 24 — a 1.6-trillion-parameter Mixture-of-Experts model (49B active params) available under the MIT license on Hugging Face. DeepSeek-V4-Pro is priced at just $1.74/M input tokens (vs. ~$12/M for GPT-5.5 output), and the Flash variant hits a staggering $0.14/M input — roughly 1/100th the cost of frontier proprietary models. The model also runs natively on Huawei Ascend 950PR chips, making it the first major frontier open-weight model to explicitly launch with non-NVIDIA hardware support.",
+          "link": "https://venturebeat.com/technology/deepseek-v4-arrives-with-near-state-of-the-art-intelligence-at-1-6th-the-cost-of-opus-4-7-gpt-5-5"
+        },
+        {
+          "title": "Kimi K2.6 Shocks Devs with 300-Agent Swarm Capability",
+          "summary": "Moonshot AI opened the week on April 20 by shipping Kimi K2.6, a 1-trillion-parameter open-weight model with 32B active parameters and a 256K-token context window. Its standout feature is a scaled-up agent-swarm capability that now coordinates up to 300 sub-agents across 4,000 steps — up from 100 sub-agents and 1,500 steps in K2.5. On rigorous coding benchmarks, K2.6 ties GPT-5.5, priced at just $0.60/M output tokens.",
+          "link": "https://writingmate.ai/blog/ai-news-week-of-2026-04-27"
+        },
+        {
+          "title": "Grok 4.3 Beta Goes Live with 1T Params — SuperGrok Heavy Tier Only",
+          "summary": "xAI dropped Grok 4.3 beta on April 17, available exclusively to the highest-tier SuperGrok Heavy subscribers. With 1 trillion parameters — twice the size of Grok 4.20 — and significantly longer training, the model introduces native PDF, PowerPoint, and spreadsheet generation, native video input, and tighter integration with Grok Computer (xAI's autonomous desktop agent). At $3.00/M input tokens, it aggressively undercuts GPT-5.5 while delivering near-identical intelligence index scores, with its real-time X/Twitter data integration remaining a unique differentiator.",
+          "link": "https://www.buildfastwithai.com/blogs/best-ai-models-leaderboard-april-2026-updated"
+        }
+      ]
+    },
+    {
+      "emoji": "🔬",
+      "title": "Research & Breakthroughs",
+      "items": [
+        {
+          "title": "Stanford AI Index 2026: Capability Accelerating, Transparency Collapsing",
+          "summary": "Stanford HAI released the 2026 AI Index Report this week — its most comprehensive yet at 400+ pages. The standout technical finding: SWE-bench Verified coding scores jumped from 60% to nearly 100% in a single year, and frontier models now exceed human baselines on PhD-level science questions. However, the Foundation Model Transparency Index dropped sharply from 58 to 40 points, as the most capable models increasingly withhold training data, compute, and architecture details. The report also found that the volume of AI researchers migrating to the U.S. has crashed 89% since 2017, with an 80% drop in the last year alone.",
+          "link": "https://hai.stanford.edu/news/inside-the-ai-index-12-takeaways-from-the-2026-report"
+        },
+        {
+          "title": "Neuro-Symbolic AI Cuts Robot Energy Use 100x vs. LLM-Based Systems",
+          "summary": "Researchers at Tufts University published findings (to be presented at ICRA 2026 in Vienna) showing that neuro-symbolic AI — which combines neural networks with structured symbolic reasoning — can reduce energy consumption by up to 100× compared to current LLM/VLA-based robotic systems, while also improving task accuracy. The approach mirrors how humans break problems into logical steps, enabling robots to handle long-horizon manipulation tasks without brute-force trial-and-error. The work is a direct challenge to the dominant paradigm of scaling transformer-based models for robotics.",
+          "link": "https://www.sciencedaily.com/releases/2026/04/260405003952.htm"
+        },
+        {
+          "title": "Google's TurboQuant: 6× KV-Cache Memory Reduction, Zero Accuracy Loss",
+          "summary": "Google's research team formally presented TurboQuant at ICLR 2026, an algorithm that quantizes the KV cache to just 3 bits with no measurable accuracy degradation, reducing memory usage by at least 6× and delivering up to an 8× speedup in attention computation. The two-step process combines PolarQuant (random vector rotation to simplify geometry) with the Quantized Johnson-Lindenstrauss algorithm (a residual error-checker). The implication for engineers: inference costs for long-context models could fall dramatically as this technique is adopted across data center stacks.",
+          "link": "https://www.crescendo.ai/news/latest-ai-news-and-updates"
+        },
+        {
+          "title": "AI Agents Still Struggle: Score Half as Well as Human PhDs on Complex Tasks",
+          "summary": "The Stanford AI Index 2026 report poured cold water on agentic hype, finding that the best AI agents score roughly half as well as human specialists with PhDs on complex, multi-step scientific workflows. Separately, the report documented that publications in the natural sciences mentioning AI grew 26% year-over-year in 2025, topping 80,000 papers — yet AI agents still can't reliably replicate the multi-step workflows researchers use daily. \"Agents are wonderful, but we are still far from a place where we understand how to use them effectively,\" said co-chair Yolanda Gil.",
+          "link": "https://www.nature.com/articles/d41586-026-01199-z"
+        }
+      ]
+    },
+    {
+      "emoji": "🛠️",
+      "title": "Tools & Frameworks",
+      "items": [
+        {
+          "title": "MCP Crosses 97M Installs — Now Under Linux Foundation Governance",
+          "summary": "Anthropic's Model Context Protocol crossed 97 million installs in March 2026, and has now transitioned governance to the Linux Foundation's Agentic AI Foundation (AAIF), meaning development moves to open foundation processes rather than being driven by a single company. Official SDKs now ship in Python, TypeScript, Java, C#, Go, Swift, and Kotlin, and the community has built over 2,000 MCP servers on GitHub. Every major AI provider — including OpenAI's Agents SDK v0.4, Google's ADK, and Block's Goose — now ships MCP-compatible tooling, cementing it as the de facto agent-to-tool integration protocol.",
+          "link": "https://fazm.ai/blog/open-source-ai-releases-april-2026"
+        },
+        {
+          "title": "Google ADK, OpenAI Codex CLI & Block's Goose: The April Agent Framework Surge",
+          "summary": "April's model wave triggered a parallel explosion in open-source agent tooling. Google's Agent Development Kit (ADK) for Python topped 8,200 GitHub stars in its first two weeks; OpenAI's Codex CLI (TypeScript, sandboxed terminal execution) hit 5,800 stars; and Block's Goose v1.2 — a Rust-based, local-first agent with automatic MCP server discovery — reached 4,900 stars after shipping on April 10. OpenAI's Agents SDK v0.4 (April 5) also added MCP tool-use support and streaming handoffs between agents, meaning agents built with the OpenAI SDK can now consume the same MCP servers used by Claude Code and Cursor.",
+          "link": "https://fazm.ai/blog/new-ai-model-releases-open-source-projects-april-2026"
+        },
+        {
+          "title": "DeepSeek V4 Technical Paper: Novel Hybrid Attention Architecture for 1M-Token Contexts",
+          "summary": "DeepSeek's V4 technical report drew significant academic attention for its hybrid CSA/HCA (Compressed Sparse Attention + Heavily Compressed Attention) architecture, which requires only 27% of the single-token inference FLOPs of DeepSeek-V3.2 at 1M-token contexts. Researchers on r/LocalLLaMA and Hacker News flagged the KV-cache reduction numbers as particularly significant for long-context inference economics. Multiple researchers called it one of the most rigorously written model papers of the year — a notable contrast to the increasingly opaque technical disclosures from U.S. frontier labs.",
+          "link": "https://writingmate.ai/blog/ai-news-week-of-2026-04-27"
+        },
+        {
+          "title": "microsoft/markitdown Surges: Convert Any Document to LLM-Ready Markdown",
+          "summary": "Microsoft's open-source `markitdown` library gained 3,600+ GitHub stars in its first week of broad visibility this April, solving a pain point every RAG pipeline eventually hits: converting PDFs, DOCX, PPTX, HTML, and other messy formats into clean Markdown suitable for LLM context windows. It's become a go-to preprocessing step for teams building document-heavy AI pipelines, and complements the wave of new long-context models (Llama 4 Scout's 10M-token window, GPT-5.5's 1M window) that can now ingest entire document libraries in a single request.",
+          "link": "https://fazm.ai/blog/new-open-source-ai-projects-github-hugging-face-april-2026"
+        }
+      ]
+    },
+    {
+      "emoji": "💼",
+      "title": "Industry & Business",
+      "items": [
+        {
+          "title": "Microsoft–OpenAI End 7-Year Exclusivity — GPT-5.5 Lands on AWS Bedrock",
+          "summary": "In the week's biggest structural shift, Microsoft and OpenAI announced a renegotiated partnership on April 27 that ends Microsoft's exclusive license to OpenAI's models — a relationship dating back to a $1B deal in 2019. Microsoft's license transitions from exclusive to non-exclusive through 2032, and OpenAI is now free to distribute its products across any cloud provider. The very next day, AWS and OpenAI announced that GPT-5.5, GPT-5.4, and OpenAI's Codex agent are now available on Amazon Bedrock in limited preview, alongside a new Amazon Bedrock Managed Agents service co-built with OpenAI for stateful agentic workflows.",
+          "link": "https://techcrunch.com/2026/04/27/openai-ends-microsoft-legal-peril-over-its-50b-amazon-deal/"
+        },
+        {
+          "title": "Anthropic Raises $65B in One Week from Amazon and Google",
+          "summary": "In a stunning display of hyperscaler competition, Anthropic secured $65 billion in fresh investment commitments in a single week: Amazon committed up to $25 billion ($5B upfront) on April 20, and Google followed with up to $40 billion ($10B upfront) on April 24, both at a $350 billion valuation. Combined, the deals lock in 10 gigawatts of pledged AI compute (5GW AWS Trainium, 5GW Google TPUs). Anthropic's annualized revenue has now surpassed $30 billion — up 30× in 15 months — and an IPO as soon as late 2026 is increasingly likely, with secondary market valuations reportedly crossing $1 trillion.",
+          "link": "https://techcrunch.com/2026/04/24/google-to-invest-up-to-40b-in-anthropic-in-cash-and-compute/"
+        },
+        {
+          "title": "OpenAI Codex Labs: Partnering with Global Consultancies for Enterprise Rollout",
+          "summary": "OpenAI announced a Codex Labs initiative this week, embedding AI coding specialists within enterprises through partnerships with global consulting firms to accelerate production adoption of its Codex tools. Usage of Codex is rising rapidly, and OpenAI positions the initiative as a key front in its intensifying rivalry with Anthropic's Claude Code for enterprise developer mindshare. OpenAI also announced GPT-5.5 will come to its API imminently, but noted enterprise deployments require \"different safeguards\" — underscoring the growing compliance burden in agentic coding deployments.",
+          "link": "https://www.marketingprofs.com/opinions/2026/54587/ai-update-april-24-2026-ai-news-and-views-from-the-past-week"
+        },
+        {
+          "title": "White House Moves to Restore Anthropic Federal Access, Including Mythos",
+          "summary": "The White House is drafting guidance that would allow federal agencies to work with Anthropic again, including potential access to the restricted Claude Mythos Preview model, according to reporting this week. The move follows Anthropic's launch of Project Glasswing — an effort to deploy Mythos specifically for defensive cybersecurity tasks with 50 vetted partner organizations. The guidance represents a significant policy development as the U.S. government grapples with how to leverage AI models that have been restricted from general public release due to their advanced offensive cybersecurity capabilities.",
+          "link": "https://llm-stats.com/ai-news"
+        }
+      ]
+    },
+    {
+      "emoji": "💡",
+      "title": "Worth Reading",
+      "items": [
+        {
+          "title": "The Multi-Model Routing Era Has Arrived — Pick by Task, Not by Ranking",
+          "summary": "With GPT-5.5, DeepSeek V4, Claude Opus 4.7, Kimi K2.6, and Grok 4.3 all live simultaneously, the era of a single \"best model\" is definitively over. A detailed engineering analysis this week lays out the practical routing matrix: DeepSeek V4-Flash ($0.14/M input) for high-throughput tool-calling, Claude Opus 4.7 for agentic coding (87.6% SWE-bench Verified), Gemini 3.1 Pro for complex scientific reasoning (94.3% GPQA Diamond), and GPT-5.5 for long-context computer use (74% MRCR at 1M tokens). Building model-agnostic routing infrastructure now is the strategic imperative.",
+          "link": "https://aithority.com/machine-learning/from-gpt-5-5-to-deepseek-v4-how-developers-are-building-smarter-ai-agents-with-multi-model-routing-in-2026/"
+        },
+        {
+          "title": "Stanford AI Index 2026: Transparency Is the Next Crisis — Scores Drop from 58 to 40",
+          "summary": "The Stanford AI Index 2026 found that the Foundation Model Transparency Index dropped from 58 to 40 points this year, with the most capable models disclosing the least. The report documents a widening gap between AI capability and governance readiness, calling it \"the next crisis\" in AI development. For engineers, the practical implication is stark: the models you are increasingly building on are becoming black boxes even to regulators, and U.S. AI talent inflows have collapsed 80% in a single year. The full 400-page report and raw dataset are available for free download from Stanford HAI.",
+          "link": "https://hai.stanford.edu/ai-index/2026-ai-index-report"
+        },
+        {
+          "title": "\"Vibe Coding\" Gets a Quality Tax: Developers 81% More Productive but Debugging AI Tests 10–15 hrs/Week",
+          "summary": "A widely-cited analysis this week quantifies the hidden cost of AI-assisted development: while vibe coding has reduced time on routine CRUD operations by 30–55%, trust in AI-generated code has fallen from 77% (2023) to 60% (2026). Senior developers report being 81% more productive overall but spending 10–15 hours per week maintaining and debugging AI-generated test suites and catching subtle logic errors. The \"Quality Tax\" is a critical engineering management issue as agentic coding tools like Claude Code and Codex become standard.",
+          "link": "https://www.devflokers.com/blog/new-ai-papers-arxiv-last-24-hours-april-2026"
+        }
+      ]
+    }
+  ],
+  "one_liner": "This week, four frontier models dropped in five days, Anthropic raised $65B before lunch, and Microsoft finally let OpenAI go on a date with AWS — the AI industry is speed-running corporate history."
+}
