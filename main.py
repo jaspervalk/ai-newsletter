@@ -138,7 +138,7 @@ def main():
     today = datetime.now().strftime("%B %d, %Y")
     week_num = datetime.now().isocalendar()[1]
 
-    subject = f"🤖 Weekly AI Newsletter — Week {week_num} ({today})"
+    subject = f"The AI Weekly · Issue {week_num:02d} · {today}"
     html = render_newsletter(newsletter_data, today, week_num)
 
     # Save a local copy
