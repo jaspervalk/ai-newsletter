@@ -12,7 +12,7 @@ BODY = "#2d2d2d"
 MUTED = "#6b6b6b"
 BG = "#faf6f0"
 CARD = "#ffffff"
-ACCENT = "#b8541e"
+ACCENT = "#14366e"
 RULE = "#e8e2d5"
 ITEM_RULE = "#f0ebe0"
 
@@ -24,9 +24,17 @@ def render_newsletter(data: dict, date_str: str, week_num: int) -> str:
     """Render newsletter data into an email-compatible HTML document."""
 
     sections_html = ""
-    for idx, section in enumerate(data.get("sections", []), start=1):
+    idx = 0
+    for section in data.get("sections", []):
+        # Guard against malformed model output (e.g. a section returned as a
+        # plain string instead of an object) so one bad item can't crash the send.
+        if not isinstance(section, dict):
+            continue
+
         items_html = ""
         for item in section.get("items", []):
+            if not isinstance(item, dict):
+                continue
             title = escape(item.get("title", ""))
             summary = escape(item.get("summary", ""))
 
@@ -51,6 +59,11 @@ def render_newsletter(data: dict, date_str: str, week_num: int) -> str:
                 </td>
             </tr>"""
 
+        # Skip a section that has no valid items after filtering.
+        if not items_html:
+            continue
+
+        idx += 1
         section_num = f"{idx:02d}"
         emoji = escape(section.get("emoji", ""))
         sec_title = escape(section.get("title", ""))
