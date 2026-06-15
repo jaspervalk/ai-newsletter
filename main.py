@@ -59,13 +59,13 @@ def gather_ai_news() -> dict:
     week_ago = (datetime.now() - timedelta(days=7)).strftime("%B %d, %Y")
 
     response = client.messages.create(
-        model="claude-sonnet-4-6",
+        model="claude-opus-4-8",
         max_tokens=8192,
         tools=[
             {
                 "type": "web_search_20250305",
                 "name": "web_search",
-                "max_uses": 10,
+                "max_uses": 16,
             },
             NEWSLETTER_TOOL,
         ],
@@ -78,8 +78,24 @@ Your job:
    frameworks, practical engineering insights, and industry moves
 3. After your searches, call the submit_newsletter tool with the final newsletter content
 
-Search multiple queries to get broad coverage:
-- New AI model releases and benchmarks
+MANDATORY FLAGSHIP-MODEL SWEEP (do this first, every week):
+A new flagship model launch is the single most important kind of news and must
+never be missed. Before anything else, run a SEPARATE, EXPLICIT search for the
+latest model from EACH of these labs, by name:
+- Anthropic (Claude — e.g. Opus / Sonnet / Haiku / Fable / Mythos lines)
+- OpenAI (GPT / o-series)
+- Google (Gemini)
+- Meta (Llama)
+- Mistral
+- xAI (Grok)
+- DeepSeek / Alibaba (Qwen) / other major Chinese labs
+Your training cutoff is older than this week's news, so DO NOT rely on memory for
+what the newest model is — find it by searching each lab by name. If a lab shipped,
+updated, withdrew, or repriced a model in the covered period, it goes in the
+newsletter, even if the story is messy or was later reversed. Note launches AND
+withdrawals/suspensions.
+
+Then search broadly for the rest:
 - AI research papers and breakthroughs
 - AI tools, frameworks, and open-source releases
 - Major AI industry news and company announcements
@@ -91,8 +107,10 @@ Suggested sections (only include those that have news):
             {
                 "role": "user",
                 "content": (
-                    f"Find the most important AI news from {week_ago} to {today}, "
-                    "then call submit_newsletter with 2-4 items per section."
+                    f"Find the most important AI news from {week_ago} to {today}. "
+                    "Start with the mandatory flagship-model sweep (search each major "
+                    "lab by name for its newest model), then broaden out. "
+                    "Then call submit_newsletter with 2-4 items per section."
                 ),
             }
         ],
