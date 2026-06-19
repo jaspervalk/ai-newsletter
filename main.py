@@ -96,17 +96,18 @@ newsletter, even if the story is messy or was later reversed. Note launches AND
 withdrawals/suspensions.
 
 RESEARCH-WITH-CODE SWEEP (do this too, every week):
-Specifically check the week's notable new research papers that ship with code —
-the kind of thing the old Papers with Code site tracked. Search these living
-sources by name:
-- Hugging Face Trending / Daily Papers (huggingface.co/papers) — the main successor
+Specifically check the week's notable new research papers that ship with code.
+Search these sources by name:
+- paperswithcode.co — community-run, actively-updated Papers with Code successor
+  (the original paperswithcode.com was retired by Meta in mid-2025)
+- Hugging Face Trending / Daily Papers (huggingface.co/papers)
 - arXiv recent cs.AI / cs.LG / cs.CL highlights
 - GitHub Trending (Python / Jupyter / overall) for new ML repos gaining traction
 Prefer papers/projects that have an open implementation a practitioner could run.
+Because these aggregators are third-party, link to the primary source where you can
+(the arXiv paper, the lab's blog, or the project's repo) so every link is verifiable.
 Surface the standouts in the Research & Breakthroughs section, and note when a
 paper has code available.
-(Note: paperswithcode.com itself was retired by Meta in mid-2025; use the sources
-above as its replacement.)
 
 Then search broadly for the rest:
 - AI research papers and breakthroughs
