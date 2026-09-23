@@ -39,3 +39,15 @@ jobs:
           name: newsletter-${{ github.run_number }}
           path: latest_newsletter.html
           retention-days: 30
+
+  # GitHub disables scheduled workflows after 60 days without repo activity.
+  # Re-enabling via the API on every run resets that timer.
+  keepalive:
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+      - name: Keep workflow enabled
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow enable newsletter.yml --repo ${{ github.repository }}
