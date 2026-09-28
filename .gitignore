@@ -3,3 +3,4 @@ latest_newsletter.html
 __pycache__/
 *.pyc
 .venv/
+latest_newsletter.json

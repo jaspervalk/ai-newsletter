@@ -20,6 +20,61 @@ SERIF = "Georgia, 'Times New Roman', Times, serif"
 SANS = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
 
 
+def _paragraphs(text: str, style: str) -> str:
+    """Render text with blank-line-separated paragraphs as <p> tags."""
+    parts = [p.strip() for p in str(text).split("\n\n") if p.strip()]
+    return "".join(f'<p style="{style}">{escape(p)}</p>' for p in parts)
+
+
+def _read_link(link: str) -> str:
+    if not (isinstance(link, str) and link.startswith("http")):
+        return ""
+    return (
+        f' <a href="{escape(link, quote=True)}" '
+        f'style="color: {ACCENT}; text-decoration: none; '
+        f'font-weight: 600; white-space: nowrap;">Read &rarr;</a>'
+    )
+
+
+def _render_deep_dives(deep_dives) -> str:
+    body_style = f"margin: 0 0 12px 0; font-family: {SANS}; color: {BODY}; font-size: 15px; line-height: 1.65;"
+    label_style = (
+        f"margin: 18px 0 6px 0; font-family: {SANS}; color: {ACCENT}; font-size: 11px; "
+        f"font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase;"
+    )
+    parts = [
+        ("How it works", "how_it_works"),
+        ("Why it matters", "why_it_matters"),
+        ("Caveats", "caveats"),
+    ]
+
+    html = ""
+    for dive in deep_dives if isinstance(deep_dives, list) else []:
+        if not isinstance(dive, dict) or not dive.get("title"):
+            continue
+        blocks = _paragraphs(dive.get("what_happened", ""), body_style)
+        for label, key in parts:
+            if dive.get(key):
+                blocks += f'<p style="{label_style}">{label}</p>' + _paragraphs(dive[key], body_style)
+        link_html = _read_link(dive.get("link", ""))
+        if link_html:
+            blocks += f'<p style="margin: 4px 0 0 0; font-family: {SANS}; font-size: 14px;">{link_html.strip()}</p>'
+
+        html += f"""
+        <tr>
+            <td style="padding: 36px 0 28px 0; border-bottom: 1px solid {RULE};">
+                <p style="margin: 0 0 8px 0; font-family: {SANS}; color: {ACCENT}; font-size: 11px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase;">
+                    Deep Dive
+                </p>
+                <h2 style="margin: 0 0 14px 0; font-family: {SERIF}; font-size: 24px; color: {INK}; font-weight: 700; line-height: 1.25;">
+                    {escape(dive["title"])}
+                </h2>
+                {blocks}
+            </td>
+        </tr>"""
+    return html
+
+
 def render_newsletter(data: dict, date_str: str, week_num: int) -> str:
     """Render newsletter data into an email-compatible HTML document."""
 
@@ -37,14 +92,13 @@ def render_newsletter(data: dict, date_str: str, week_num: int) -> str:
                 continue
             title = escape(item.get("title", ""))
             summary = escape(item.get("summary", ""))
+            link_html = _read_link(item.get("link", ""))
 
-            link_html = ""
-            link = item.get("link", "")
-            if link and link.startswith("http"):
-                link_html = (
-                    f' <a href="{escape(link, quote=True)}" '
-                    f'style="color: {ACCENT}; text-decoration: none; '
-                    f'font-weight: 600; white-space: nowrap;">Read &rarr;</a>'
+            why_html = ""
+            if item.get("why_it_matters"):
+                why_html = (
+                    f'<p style="margin: 8px 0 0 0; font-family: {SANS}; color: {MUTED}; font-size: 13.5px; line-height: 1.55;">'
+                    f'<strong style="color: {ACCENT};">Why it matters:</strong> {escape(item["why_it_matters"])}</p>'
                 )
 
             items_html += f"""
@@ -56,6 +110,7 @@ def render_newsletter(data: dict, date_str: str, week_num: int) -> str:
                     <p style="margin: 0; font-family: {SANS}; color: {BODY}; font-size: 14.5px; line-height: 1.6;">
                         {summary}{link_html}
                     </p>
+                    {why_html}
                 </td>
             </tr>"""
 
@@ -80,6 +135,9 @@ def render_newsletter(data: dict, date_str: str, week_num: int) -> str:
             </td>
         </tr>
         {items_html}"""
+
+    # Deep dives go last: readers scan the week's news first, then read further.
+    sections_html += _render_deep_dives(data.get("deep_dives", []))
 
     one_liner = escape(data.get("one_liner", "Another week, another breakthrough."))
     issue_label = f"Issue {week_num:02d} &middot; {escape(date_str)}"
