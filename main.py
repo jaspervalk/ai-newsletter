@@ -19,7 +19,7 @@ from email.mime.multipart import MIMEMultipart
 from newsletter_template import render_newsletter
 
 
-MODEL = "claude-opus-5"
+MODEL = "claude-sonnet-5"
 HISTORY_FILE = "last_issue.json"
 MAX_CONTINUATIONS = 8
 
@@ -194,9 +194,11 @@ def gather_ai_news(previous_titles: list[str]) -> dict:
     week_ago = (now - timedelta(days=7)).strftime("%B %d, %Y")
     two_weeks_ago = (now - timedelta(days=14)).strftime("%B %d, %Y")
 
+    # Every search result and fetched page is re-read on each later step of the
+    # agent loop, so these limits are the main cost lever (~$17/run at 30/15/12k on Opus).
     tools = [
-        {"type": "web_search_20260209", "name": "web_search", "max_uses": 30},
-        {"type": "web_fetch_20260209", "name": "web_fetch", "max_uses": 15, "max_content_tokens": 12000},
+        {"type": "web_search_20260209", "name": "web_search", "max_uses": 15},
+        {"type": "web_fetch_20260209", "name": "web_fetch", "max_uses": 6, "max_content_tokens": 5000},
         NEWSLETTER_TOOL,
     ]
     messages = [
@@ -212,13 +214,11 @@ def gather_ai_news(previous_titles: list[str]) -> dict:
     system = build_system_prompt(today, week_ago, two_weeks_ago, previous_titles)
 
     for _ in range(MAX_CONTINUATIONS):
-        with client.beta.messages.stream(
+        with client.messages.stream(
             model=MODEL,
             max_tokens=64000,
             thinking={"type": "adaptive"},
             output_config={"effort": "high"},
-            betas=["server-side-fallback-2026-07-01"],
-            fallbacks="default",
             tools=tools,
             system=system,
             messages=messages,
