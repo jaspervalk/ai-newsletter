@@ -1,18 +1,22 @@
 {
-  "date": "September 28, 2026",
+  "date": "October 05, 2026",
   "titles": [
-    "Anthropic ships Claude Opus 5.5, its new flagship — 40% cheaper to run",
-    "OpenAI expands GPT-6 with Sol and Luna",
-    "xAI drops Grok 4.7 for coding and agents",
-    "Qwen opens weights of Qwen3.8-Flash-Next, an early Qwen4 preview",
-    "Claude autonomously discovers a CRISPR-like enzyme system",
-    "WROP probes whether video models learn object permanence — with open data",
-    "Agent-skill and research-harness papers ship with code",
-    "Mistral launches Agentic Search for multi-step retrieval",
-    "Claude Code adds parallel-thread projects and tighter model governance",
-    "Agent infrastructure dominates GitHub trending",
-    "Anthropic reportedly eyes a November IPO near $2 trillion",
-    "OpenAI discontinues the Sora API",
-    "Anthropic pricing move: Sonnet 5 introductory rate becomes permanent"
+    "Meta's Muse Spark co-authors six math papers — five solve previously open problems",
+    "Google DeepMind's SynthID Bio watermarks AI-designed proteins without breaking them",
+    "A scaling law shows AI-written web text can flip from helping to hurting pretraining",
+    "Google rolls out Gemini 4 Argon — cyber defenders first, guardrails off",
+    "Anthropic: open-weight GLM-5.3 nearly matches Claude on autonomous exploit-building",
+    "DeepSeek V4.1-Flash and Qwen3.8-27B extend the September open-weights wave",
+    "Scaling law shows AI web text can flip from help to harm",
+    "SynthID Bio watermarks AI-designed proteins",
+    "Coding agents help close a 59-year-old semigroup classification",
+    "Looped models learn to decode with less memory",
+    "Cloudflare open-sources Clef and Clef-flash, decision models instead of chat models",
+    "Ai2 ships OLMo-core 3, keeping experts resident on GPUs",
+    "Choir: an open protocol for distributed multi-agent autoformalization",
+    "Meta's Muse Spark co-authors math papers that solve open problems",
+    "Google details Project Suncatcher, a TPU satellite concept",
+    "UCLA's light-powered system flags deepfakes at ~98% accuracy",
+    "arXiv tightens submission rate limits, citing AI-assisted paper volume"
   ]
 }
