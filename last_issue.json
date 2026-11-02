@@ -1,16 +1,15 @@
 {
-  "date": "October 26, 2026",
+  "date": "November 02, 2026",
   "titles": [
-    "Claude Duet: Anthropic ships a proactive, standing agent instead of a chatbot",
-    "Kimi K3.1 Pro: an open-weight 2.8T-parameter model lands near the closed frontier",
-    "DeepMind paper: letting models bid for prompts gets near-optimal task allocation",
-    "Claude Duet opens as a research preview",
-    "GPT-6 Pro gets parallel agents inside ChatGPT",
-    "No new frontier model from Google, Meta, xAI, or Mistral this week",
-    "Kimi K3.1 Pro: Moonshot's 2.8T-parameter open weights",
-    "MiniMax M3.1 Flash: a 428B MoE model that was secretly live for weeks",
-    "AI agents bidding for prompts hits near-optimal allocation",
-    "Google Antigravity finds an antimicrobial peptide candidate in an afternoon",
-    "Google opens frontier science models to European researchers"
+    "Genie 4: DeepMind's world model learns to talk",
+    "Mistral Large 4: a trillion-parameter open-weight model out of Europe",
+    "Genie 4 preview: DeepMind's world model gains sound and dialogue",
+    "Mistral Large 4 weights land on Hugging Face",
+    "GPT-6.1 Terra ships for computer use",
+    "Gemini 4 Carbon announced, but only for cyber defenders",
+    "OpenAI scraps GPT-6.1 Astra over failed safety tests",
+    "Deepgram buys Daily, keeps Pipecat open",
+    "Anthropic's S-1 shows $16.3B in first-half revenue",
+    "FTC escalates its probe into AI agents acting without authorization"
   ]
 }
